@@ -1,0 +1,96 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "My First API",
+        "version": "0.1"
+    },
+    "paths": {
+        "api/email": {
+            "get": {
+                "tags": [
+                    "email"
+                ],
+                "description": "Get email list",
+                "parameters": [
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "Order by date, value asc or desc",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Email list"
+                    }
+                }
+            }
+        },
+        "/api/email": {
+            "post": {
+                "tags": [
+                    "email"
+                ],
+                "description": "Create new email",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "person_data_processing_agree": {
+                                        "type": "boolean"
+                                    },
+                                    "text": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Pet not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:pets",
+                            "read:pets"
+                        ]
+                    }
+                ]
+            }
+        },
+        "api/email/:id": {
+            "get": {
+                "tags": [
+                    "email"
+                ],
+                "description": "Create new email",
+                "responses": {
+                    "default": {
+                        "description": "Email description"
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}

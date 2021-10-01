@@ -28,7 +28,7 @@ class EmailRequest extends FormRequest
                 'email' => 'required|email|max:50',
                 'name' => 'required|max:50',
                 'person_data_processing_agree'=>'boolean',
-                'text'=>'tex|max:1000',
+                'text'=>'text|max:1000',
         ];
     }
 }

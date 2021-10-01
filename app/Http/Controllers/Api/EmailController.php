@@ -15,6 +15,17 @@ class EmailController extends Controller
 {
 
     /**
+     * @OA\Get(
+     *     path="api/email",
+     *     tags={"email"},
+     *     description="Get email list",
+     *     @OA\Parameter (name="order",in="query",description="Order by date, value asc or desc",required=false),
+     *     @OA\Response(response="default", description="Email list")
+     *         *
+     *
+     * )
+     */
+    /**
      * Store a newly created resource in storage.
      *
      * @param EmailRequest $request
@@ -29,6 +40,41 @@ class EmailController extends Controller
         return EmailListResource::collection($email);
     }
 
+
+    /**
+     * @OA\Post (
+     *     path="/api/email",
+     *     tags={"email"},
+     *     description="Create new email",
+
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *            mediaType="multipart/form-data",
+     *            @OA\Schema(
+     *               type="object",
+     *
+     *               @OA\Property(property="email", type="string",),
+     *               @OA\Property(property="name", type="string"),
+     *               @OA\Property(property="person_data_processing_agree", type="boolean"),
+     *               @OA\Property(property="text", type="string"),
+     *                 )
+     *        )
+     *    ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid ID supplied",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Pet not found",
+     *     ),
+     *     @OA\Response(
+     *         response=405,
+     *         description="Validation exception",
+     *     ),
+     *     security={{"petstore_auth":{"write:pets", "read:pets"}}}
+     * )
+     */
     /**
      * Store a newly created resource in storage.
      *
@@ -47,6 +93,17 @@ class EmailController extends Controller
        }
     }
 
+
+    /**
+     * @OA\Get(
+     *     path="api/email/:id",
+     *     tags={"email"},
+     *     description="Create new email",
+     *     @OA\Response(response="default", description="Email description")
+     *         *
+     *
+     * )
+     */
     /**
      * Display the specified resource.
      *
@@ -64,26 +121,5 @@ class EmailController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
