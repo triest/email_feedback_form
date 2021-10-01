@@ -15,6 +15,7 @@
         <div class="form-group">
             <textarea id="body" name="text"></textarea>
         </div>
+        <input type="checkbox" name="person_data_processing_agree">
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

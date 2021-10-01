@@ -8,6 +8,7 @@ use App\Http\Requests\EmailRequest;
 use App\Http\Resources\EmailListResource;
 use App\Http\Resources\EmailResource;
 use App\Models\Email;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class EmailController extends Controller
@@ -38,8 +39,12 @@ class EmailController extends Controller
     {
         $email = new Email();
         $email->fill($request->post());
-        $email->save();
-        return response()->json($email->id);
+        try {
+            $email->save();
+            return response()->json($email->id);
+        } catch (QueryException  $e) {
+            return response()->json($e->getMessage())->setStatusCode(400);
+       }
     }
 
     /**

@@ -25,8 +25,10 @@ class EmailRequest extends FormRequest
     {
         return [
             //
-                'email' => 'required|email',
-                'name' => 'required',
+                'email' => 'required|email|max:50',
+                'name' => 'required|max:50',
+                'person_data_processing_agree'=>'boolean',
+                'text'=>'tex|max:1000',
         ];
     }
 }
