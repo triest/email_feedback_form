@@ -13,9 +13,13 @@
                    placeholder="Enter email">
         </div>
         <div class="form-group">
-            <textarea id="body" name="text"></textarea>
+            <label for="text">Текст письма</label>
+            <textarea id="body" name="text" cols="128" style="resize: none"></textarea>
         </div>
-        <input type="checkbox" name="person_data_processing_agree">
+        <div class="form-group">
+            <input type="checkbox" name="person_data_processing_agree" value="1">
+            <label for="person_data_processing_agree">Согласен на обработку персональных данных</label>
+        </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

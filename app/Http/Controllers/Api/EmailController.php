@@ -16,7 +16,7 @@ class EmailController extends Controller
 
     /**
      * @OA\Get(
-     *     path="api/email",
+     *     path="/api/email",
      *     tags={"email"},
      *     description="Get email list",
      *     @OA\Parameter (name="order",in="query",description="Order by date, value asc or desc",required=false),
@@ -49,7 +49,7 @@ class EmailController extends Controller
 
      *     @OA\RequestBody(
      *         @OA\MediaType(
-     *            mediaType="multipart/form-data",
+     *            mediaType="application/json",
      *            @OA\Schema(
      *               type="object",
      *
@@ -87,17 +87,18 @@ class EmailController extends Controller
         $email->fill($request->post());
         try {
             $email->save();
-            return response()->json($email->id);
+            return response()->json(['result'=>true,'id'=>$email->id])->setStatusCode(202);
         } catch (QueryException  $e) {
-            return response()->json($e->getMessage())->setStatusCode(400);
+            return response()->json(['result'=>false,$e->getMessage()])->setStatusCode(400);
        }
     }
 
 
     /**
      * @OA\Get(
-     *     path="api/email/:id",
+     *     path="/api/email/{id}",
      *     tags={"email"},
+     *     @OA\Parameter (name="id",in="path",description="Email id",required=true),
      *     description="Create new email",
      *     @OA\Response(response="default", description="Email description")
      *         *
@@ -108,16 +109,20 @@ class EmailController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id, Request $request)
     {
-        $fields = $request->get('fields', false);
+        $fields = $request->get('fields', "*");
+        $email=Email::select($fields)->where(['id' => $id])->first();
+        if(!$email){
+            return  response()->json()->setStatusCode(200);
+        }
 
         if ($fields) {
-            return new EmailResource(Email::select($fields)->where(['id' => $id])->first());
+            return new EmailResource($email);
         } else {
-            return new EmailResource(Email::select()->where(['id' => $id])->first());
+            return new EmailResource($email);
         }
     }
 

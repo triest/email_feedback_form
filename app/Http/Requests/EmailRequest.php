@@ -2,7 +2,11 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
 class EmailRequest extends FormRequest
 {
@@ -14,6 +18,14 @@ class EmailRequest extends FormRequest
     public function authorize()
     {
         return true;
+    }
+
+    public function all($keys = null){
+        if(empty($keys)){
+            return parent::json()->all();
+        }
+
+        return collect(parent::json()->all())->only($keys)->toArray();
     }
 
     /**
@@ -28,7 +40,34 @@ class EmailRequest extends FormRequest
                 'email' => 'required|email|max:50',
                 'name' => 'required|max:50',
                 'person_data_processing_agree'=>'boolean',
-                'text'=>'text|max:1000',
+                'text'=>'max:1000',
         ];
+    }
+
+    public function messages()
+    {
+        return [
+                'email.required' => 'Email обязателен',
+                'email.email' => 'Неверный email',
+                'name.required' => 'Имя обязательно',
+                'text.max' => 'Текст письма до 1000 символов',
+        ];
+    }
+
+    /**
+     * Handle a failed validation attempt.
+     *
+     * @param  \Illuminate\Contracts\Validation\Validator $validator
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = (new ValidationException($validator))->errors();
+
+        throw new HttpResponseException(
+                response()->json(['errors' => $errors], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+        );
     }
 }

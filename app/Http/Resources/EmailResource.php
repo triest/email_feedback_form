@@ -18,7 +18,8 @@ class EmailResource extends JsonResource
                 'id' => $this->id,
                 'email' => $this->email,
                 'name' => $this->name,
-                'text' => $this->text
+                'text' => $this->text,
+                'person_data_processing_agree' => $this->person_data_processing_agree
         ];
     }
 }

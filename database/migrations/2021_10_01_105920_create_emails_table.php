@@ -18,6 +18,7 @@ class CreateEmailsTable extends Migration
             $table->string('name',50);
             $table->string('email',50);
             $table->string('text',1000)->nullable();
+            $table->boolean('person_data_processing_agree')->default(false);
             $table->timestamps();
         });
     }

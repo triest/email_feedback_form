@@ -5,7 +5,7 @@
         "version": "0.1"
     },
     "paths": {
-        "api/email": {
+        "/api/email": {
             "get": {
                 "tags": [
                     "email"
@@ -24,9 +24,7 @@
                         "description": "Email list"
                     }
                 }
-            }
-        },
-        "/api/email": {
+            },
             "post": {
                 "tags": [
                     "email"
@@ -34,7 +32,7 @@
                 "description": "Create new email",
                 "requestBody": {
                     "content": {
-                        "multipart/form-data": {
+                        "application/json": {
                             "schema": {
                                 "properties": {
                                     "email": {
@@ -76,12 +74,20 @@
                 ]
             }
         },
-        "api/email/:id": {
+        "/api/email/{id}": {
             "get": {
                 "tags": [
                     "email"
                 ],
                 "description": "Create new email",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Email id",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "default": {
                         "description": "Email description"
