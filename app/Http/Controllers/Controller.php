@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller as BaseController;
 
 
 /**
- * @OA\Info(title="My First API", version="0.1")
+ * @OA\Info(title="Email API", version="0.1")
  */
 class Controller extends BaseController
 {
