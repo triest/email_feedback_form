@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmailController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [EmailController::class,'index']);
 Route::get('/create', [EmailController::class,'create'])->name('create');
+Route::get('/test',function (){
+    $columns = Schema::getColumnListing('emails');
+    dump($columns);
+} );
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

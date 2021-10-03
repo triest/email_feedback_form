@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EmailListRequest;
 use App\Http\Requests\EmailRequest;
+use App\Http\Requests\EmailViewRequest;
 use App\Http\Resources\EmailListResource;
 use App\Http\Resources\EmailResource;
 use App\Models\Email;
@@ -35,7 +36,7 @@ class EmailController extends Controller
     {
         $order = $request->get('order', 'asc');
 
-        $email = Email::select()->orderBy('created_at', $order)->paginate(10);
+        $email = Email::select(['id','name','email'])->orderBy('created_at', $order)->paginate(10);
 
         return EmailListResource::collection($email);
     }
@@ -111,7 +112,7 @@ class EmailController extends Controller
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id, Request $request)
+    public function show($id, EmailViewRequest $request)
     {
         $fields = $request->get('fields', "*");
         $email=Email::select($fields)->where(['id' => $id])->first();

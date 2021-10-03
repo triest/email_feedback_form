@@ -27,7 +27,7 @@ class EmailFactory extends Factory
                 'name' => $this->faker->name(),
                 'email' => $this->faker->unique()->safeEmail(),
                 'text' => $this->faker->text,
-             //   'person_data_processing_agree'=>$this->faker->boolean()
+                'person_data_processing_agree'=>$this->faker->boolean()
         ];
     }
 }

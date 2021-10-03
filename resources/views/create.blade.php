@@ -8,7 +8,7 @@
                    placeholder="введите имя">
         </div>
         <div class="form-group">
-            <label for="exampleInputEmail1">Email </label>
+            <label for="exampleInputEmail1 ">Email </label>
             <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp"
                    placeholder="Enter email">
         </div>
@@ -21,7 +21,7 @@
             <label for="person_data_processing_agree">Согласен на обработку персональных данных</label>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Отправить</button>
     </form>
 @endsection
 
