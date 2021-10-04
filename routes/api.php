@@ -20,4 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::apiResource('email',EmailController::class);
+Route::apiResource('email',EmailController::class)->only('index','store','show');

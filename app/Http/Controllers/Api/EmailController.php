@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 class EmailController extends Controller
 {
 
+    public $emailsRepPage=10;
+
     /**
      * @OA\Get(
      *     path="/api/email",
@@ -36,7 +38,7 @@ class EmailController extends Controller
     {
         $order = $request->get('order', 'asc');
 
-        $email = Email::select(['id','name','email'])->orderBy('created_at', $order)->paginate(10);
+        $email = Email::select(['id', 'name', 'email'])->orderBy('created_at', $order)->paginate($this->emailsRepPage);
 
         return EmailListResource::collection($email);
     }
@@ -47,7 +49,6 @@ class EmailController extends Controller
      *     path="/api/email",
      *     tags={"email"},
      *     description="Create new email",
-
      *     @OA\RequestBody(
      *         @OA\MediaType(
      *            mediaType="application/json",
@@ -70,10 +71,9 @@ class EmailController extends Controller
      *         description="Pet not found",
      *     ),
      *     @OA\Response(
-     *         response=405,
+     *         response=403,
      *         description="Validation exception",
      *     ),
-     *     security={{"petstore_auth":{"write:pets", "read:pets"}}}
      * )
      */
     /**
@@ -88,10 +88,10 @@ class EmailController extends Controller
         $email->fill($request->post());
         try {
             $email->save();
-            return response()->json(['result'=>true,'id'=>$email->id])->setStatusCode(202);
+            return response()->json(['result' => true, 'id' => $email->id])->setStatusCode(202);
         } catch (QueryException  $e) {
-            return response()->json(['result'=>false,$e->getMessage()])->setStatusCode(400);
-       }
+            return response()->json(['result' => false, $e->getMessage()])->setStatusCode(400);
+        }
     }
 
 
@@ -120,11 +120,7 @@ class EmailController extends Controller
             return  response()->json()->setStatusCode(200);
         }
 
-        if ($fields) {
-            return new EmailResource($email);
-        } else {
-            return new EmailResource($email);
-        }
+        return new EmailResource($email);
     }
 
 

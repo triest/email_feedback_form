@@ -60,18 +60,10 @@
                     "404": {
                         "description": "Pet not found"
                     },
-                    "405": {
+                    "403": {
                         "description": "Validation exception"
                     }
-                },
-                "security": [
-                    {
-                        "petstore_auth": [
-                            "write:pets",
-                            "read:pets"
-                        ]
-                    }
-                ]
+                }
             }
         },
         "/api/email/{id}": {
